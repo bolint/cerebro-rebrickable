@@ -1,0 +1,19 @@
+.preview {
+    max-width: 100%;
+    max-height: 100%;
+    color: var(--secondary-font-color);
+}
+
+h2 {
+    margin: 0 0 10px;
+    font-family: var(--main-font);
+}
+
+h3 {
+    margin: 0 0 6px;
+    font-family: var(--main-font);
+}
+
+img {
+    width: 300px;
+}
