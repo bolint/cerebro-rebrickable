@@ -10,7 +10,7 @@ In Cerebro, type "rebrick set" or "rebrick part" followed by the set/part number
 
 ## Roadmap
 
-- [ ] Display **set preview**
+- [ ] Display **nice** set preview
 
 ## License
 
