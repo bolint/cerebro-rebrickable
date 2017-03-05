@@ -1,12 +1,23 @@
 'use strict';
 
-const React = require('react');
-const Preview = require('./Preview');
-const icon = require('./icon.png');
-const { memoize } = require('cerebro-tools');
+const React = require('react')
+const Preview = require('./Preview')
+const Settings = require('./Settings')
+const cache = require('./cache')
+const icon = require('./icon.png')
+const { memoize } = require('cerebro-tools')
 
-const apiKey = '4ca26878a37f1eb5c0848ec755357ea4';
 const baseUrl = 'https://rebrickable.com/api/v3/lego';
+var apiKey = '';
+
+cache.load().then(json => {
+    apiKey = json.key
+})
+
+const saveApiKey = (key) => {
+    apiKey = key
+    return cache.save({ key })
+}
 
 const fetchSets = searchTerm => {
     const url = `${baseUrl}/sets/?search=${encodeURIComponent(searchTerm)}&key=${apiKey}`;
@@ -25,11 +36,36 @@ const fetchParts = searchTerm => {
 const cachedFetchSets = memoize(fetchSets);
 const cachedFetchParts = memoize(fetchParts);
 
+const settings = ({ term, display, actions }) => {
+    const match = term.match(/^settings(.+)?$/)
+    if (match) {
+        display({
+            icon,
+            title: 'Rebrickable Settings',
+            subtitle: 'Add your API key',
+            onSelect: (event) => actions.open('http://rebrickable.com/api'),
+            getPreview: () => (
+                <Settings
+                    term={match[1]}
+                    apiKey={apiKey}
+                    onSave={saveApiKey}
+                    />
+            )
+        })
+    }
+}
+
 const fn = ({term, display, actions}) => {
+    if (!apiKey || apiKey == '') {
+        settings({term, display, actions});
+        return;
+    }
+
     let match = term.match(/rebrick set\s+(.*)/i);
 
     if (match && match[1] != '') {
         cachedFetchSets(match[1]).then(results => {
+            if (!results) return;
             const response = results.map(item => ({
                     icon,
                     id: item.set_num,
@@ -46,6 +82,7 @@ const fn = ({term, display, actions}) => {
 
         if (match && match[1] != '') {
             cachedFetchParts(match[1]).then(results => {
+                if (!results) return;
                 const response = results.map(item => ({
                         icon,
                         id: item.part_num,
@@ -59,6 +96,7 @@ const fn = ({term, display, actions}) => {
             });
         }
     }
+    settings({term, display, actions})
 }
 
 module.exports = {
