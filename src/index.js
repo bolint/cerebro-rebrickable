@@ -20,14 +20,14 @@ const saveApiKey = (key) => {
 }
 
 const fetchSets = searchTerm => {
-    const url = `${baseUrl}/sets/?search=${encodeURIComponent(searchTerm)}&key=${apiKey}`;
+    const url = `${baseUrl}/sets/?search=${encodeURIComponent(searchTerm)}&page_size=20&key=${apiKey}`;
     return fetch(url)
         .then(resp => resp.json())
         .then(resp => resp.results);
 };
 
 const fetchParts = searchTerm => {
-    const url = `${baseUrl}/parts/?search=${encodeURIComponent(searchTerm)}&key=${apiKey}`;
+    const url = `${baseUrl}/parts/?search=${encodeURIComponent(searchTerm)}&page_size=20&key=${apiKey}`;
     return fetch(url)
         .then(resp => resp.json())
         .then(resp => resp.results);
