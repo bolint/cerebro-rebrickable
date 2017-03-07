@@ -1,6 +1,7 @@
 # cerebro-rebrickable
-
-Cerebro plugin to search LEGO® Sets and Parts on Rebrickable
+[![npm](https://img.shields.io/npm/v/cerebro-rebrickable.svg)](https://www.npmjs.com/package/cerebro-rebrickable)
+[![npm](https://img.shields.io/npm/dt/cerebro-rebrickable.svg)](https://www.npmjs.com/package/cerebro-rebrickable)
+> Cerebro plugin to search LEGO® Sets and Parts on Rebrickable
 
 ## Usage
 
